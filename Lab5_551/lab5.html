@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+  
+        <script src="/leaflet-src.js"></script>
+        <link rel="stylesheet" href="libs/leaflet.css"/>
+<!--     
+        <script src="/Leaflet.draw.js"></script>
+        <script src="/Leaflet.Draw.Event.js"></script>
+        <link rel="stylesheet" href="../../src/leaflet.draw.css"/> -->
+    
+        <!-- <script src="/Toolbar.js"></script>
+        <script src="Tooltip.js"></script>
+    
+        <<script src="GeometryUtil.js"></script>
+        <script src="LatLngUtil.js"></script>
+        <script src="LineUtil.Intersect.js"></script>
+        <script src="Polygon.Intersect.js"></script>
+        <script src="Polyline.Intersect.js"></script>
+        <script src="TouchEvents.js"></script> -->
+    
+        <!-- <script src="/DrawToolbar.js"></script> -->
+        <!-- <script src="Draw.Feature.js"></script>
+        <script src="Draw.SimpleShape.js"></script> -->
+        <script src="/Draw.Polyline.js"></script>
+        <!-- <script src="Draw.Marker.js"></script>
+        <script src="Draw.Circle.js"></script>
+        <script src="Draw.CircleMarker.js"></script>
+        <script src="Draw.Polygon.js"></script>
+        <script src="Draw.Rectangle.js"></script>
+     -->
+    
+         <script src="/EditToolbar.js"></script>
+        <script src="/EditToolbar.Edit.js"></script>
+        <script src="/EditToolbar.Delete.js"></script>
+    
+        <script src="/Control.Draw.js"></script>
+    
+        <script src="/Edit.Poly.js"></script> 
+        <!-- <script src="Edit.SimpleShape.js"></script>
+        <script src="Edit.Rectangle.js"></script>
+        <script src="Edit.Marker.js"></script>
+        <script src="Edit.CircleMarker.js"></script>
+        <script src="Edit.Circle.js"></script> --> -->
+      
+       
+
+
+         
+
+        <link rel="stylesheet" href="lab5.css">
+
+        
+          
+
+</head>
+
+<body>
+   
+    
+    <script src="/EditToolbar.js"></script>
+    <script src="/EditToolbar.Edit.js"></script>
+    <script src="/EditToolbar.Delete.js"></script>
+
+    <script src="/Control.Draw.js"></script>
+
+    <script src="/Edit.Poly.js"></script> 
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css" rel="stylesheet" />
+
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
+
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css"
+
+        type="text/css">
+
+    <div id="map"></div>
+
+    
+    <!-- <div class="leaflet-draw-section">
+        <a class="leaflet-draw-draw-polyline" href="#" title="Draw Polyline"></a>
+    </div> -->
+    <script>
+
+ 
+
+        var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+
+            osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+
+            osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
+
+            map = new L.Map('map', { center: new L.LatLng(51.0447, -114.0719), zoom: 13 }),
+
+            drawnItems = L.featureGroup().addTo(map);
+
+        L.control.layers({
+
+            'openstreetmaps': osm.addTo(map),
+
+            
+
+        }, { 'drawlayer': drawnItems }, { position: 'topleft', collapsed: false }).addTo(map);
+
+        map.addControl(new L.Control.Draw({
+
+            edit: {
+
+                featureGroup: drawnItems,
+
+                poly: {
+
+                    allowIntersection: false
+
+                }
+
+            },
+
+            draw: {
+
+                polygon: {
+
+                    allowIntersection: false,
+
+                    showArea: true
+
+                }
+
+            }
+
+        }));
+
+ 
+
+        map.on(L.Draw.Event.CREATED, function (event) {
+
+            var layer = event.layer;
+
+ 
+
+            drawnItems.addLayer(layer);
+
+        });
+
+ 
+
+        map.on('draw:created', function(e) {
+
+            console.log('Layer created: ' + L.stamp(e.layer));
+
+            e.layer.options.color='red';
+
+            e.layer.on('edit', logProps);
+
+            featureGroup.addLayer(e.layer);
+
+          });
+
+
+
+
+
+    </script>
+
+    <div style="padding-bottom: 20px;" class="calculation-box">
+
+        <p>Click the map to draw a line.</p>
+
+        <div id="calculated-area"></div>
+
+        <button>Simplify</button>
+
+    </div>
+
+</body>
+
+ 
+   
+    <script src="lab5.js"></script>
+  
+   
+    
+</body>
+
+</html>
